@@ -29,7 +29,8 @@ run: all
 
 clean:
 	rm -rf $(EDK2DIR)/Build/MikanLoaderX64
-	rm -rf $(SRCDIR)/${KernelSrcDir}/kernel.elf
+	make -C $(SRCDIR)/${KernelSrcDir}/ clean
+	rm -rf disk.img
 
 #.PHONY:edk2tools
 #edk2tools:
