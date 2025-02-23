@@ -41,7 +41,8 @@
             },
             // Add the IDs of extensions you want installed when the container is created.
             "extensions": [
-                "ms-vscode.cpptools"
+                "ms-vscode.cpptools",
+                "ms-vscode-remote.remote-containers"
             ]
         }
     },
