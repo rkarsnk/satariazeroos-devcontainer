@@ -1,5 +1,5 @@
 WORKDIR := /workspaces/mikanos-devcontainer
-SRCDIR := ${WORKDIR}/src
+SRCDIR := src
 EDK2DIR := ~/edk2
 DEVENV := ~/osbook/devenv
 
@@ -17,7 +17,7 @@ all: ${OUTPUT}/Loader.efi ${SRCDIR}/${KernelSrcDir}/kernel.elf
 
 ${OUTPUT}/Loader.efi: ${SRCDIR}/${LoaderPkgDir}/Main.c
 	rm -rf $(EDK2DIR)/$(LoaderPkgDir)
-	ln -s $(SRCDIR)/$(LoaderPkgDir) $(EDK2DIR)/$(LoaderPkgDir)
+	cp -pr $(SRCDIR)/$(LoaderPkgDir) $(EDK2DIR)/$(LoaderPkgDir)
 	WORKDIR=$(WORKDIR) script/build_loader.sh
 
 ${SRCDIR}/${KernelSrcDir}/kernel.elf: 
@@ -29,9 +29,10 @@ run: all
 
 clean:
 	rm -rf $(EDK2DIR)/Build/MikanLoaderX64
-	make -C $(SRCDIR)/${KernelSrcDir}/ clean
+	rm -rf src/MikanLoaderPkg/Loader.efi
+	make -C src/${KernelSrcDir} clean
 	rm -rf disk.img
 
-#.PHONY:edk2tools
-#edk2tools:
-#	make -C $(EDK2DIR)/BaseTools/Source/C
+.PHONY:edk2tools
+edk2tools:
+	make -C $(EDK2DIR)/BaseTools/Source/C
